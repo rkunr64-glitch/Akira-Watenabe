@@ -4480,3 +4480,177 @@ button[disabled] {
     margin-bottom: 10px;
     font-size: 0.9rem;
 }
+
+/* --- CUSTOM CYBER VIDEO PLAYER --- */
+
+.cyber-video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    border-radius: 8px;
+    group: "player"; /* Untuk referensi hover */
+}
+
+/* Video Element */
+.cyber-video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Agar video tidak terpotong */
+}
+
+/* 1. LOADING SPINNER (Tech Ring) */
+.cyber-loader {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    border: 4px solid rgba(255,255,255,0.1);
+    border-top-color: var(--primary);
+    border-bottom-color: var(--secondary);
+    border-radius: 50%;
+    animation: cyberSpin 1s linear infinite;
+    display: none; /* Hidden by default */
+    z-index: 10;
+    box-shadow: 0 0 15px var(--primary);
+}
+
+@keyframes cyberSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* 2. BIG PLAY BUTTON (Overlay) */
+.big-play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    z-index: 5;
+    transition: 0.3s;
+    text-shadow: 0 0 20px var(--primary);
+    display: none; /* Diatur JS */
+}
+
+.big-play-btn:hover {
+    color: var(--primary);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* 3. CONTROLS BAR (HUD STYLE) */
+.custom-controls {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 20;
+}
+
+/* Show controls on hover */
+.cyber-video-wrapper:hover .custom-controls,
+.custom-controls:hover {
+    opacity: 1;
+}
+
+/* PROGRESS BAR */
+.progress-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer;
+    position: relative;
+    border-radius: 2px;
+    transition: height 0.2s;
+}
+
+.progress-container:hover { height: 8px; }
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute; right: -4px; top: -3px;
+    width: 10px; height: 14px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 5px #fff;
+    opacity: 0; /* Muncul saat hover */
+    transition: opacity 0.2s;
+}
+.progress-container:hover .progress-fill::after { opacity: 1; }
+
+/* BUTTONS ROW */
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-tech);
+}
+
+.left-controls, .right-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ctrl-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.ctrl-btn:hover { color: var(--primary); text-shadow: 0 0 8px var(--primary); }
+
+.time-display {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+/* VOLUME SLIDER */
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    group: "volume";
+}
+
+.volume-slider {
+    -webkit-appearance: none;
+    width: 0px; /* Hide by default, expand on hover */
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    outline: none;
+    transition: width 0.3s ease;
+    cursor: pointer;
+}
+
+.volume-container:hover .volume-slider {
+    width: 80px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px; height: 10px;
+    background: var(--secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px var(--secondary);
+}
