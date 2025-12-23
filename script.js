@@ -465,10 +465,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let bundleItems = [];
 
+    // --- UPDATE START: CUSTOM VIDEO PLAYER LOGIC ---
+
+    // 1. Helper Function: Format waktu (Detik -> MM:SS)
+    function formatTime(seconds) {
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+
+    // 2. Main Open Modal Function
     window.openModal = (id) => {
         const item = commissionsData.find(i => i.id === id);
         if(!item) return;
 
+        // Setup Link & Data Text
         const message = encodeURIComponent(`Hi Akira, I want to order: ${item.title}`);
         const orderBtn = document.getElementById("order-discord");
         orderBtn.href = `https://discord.com/users/931517941659344946?message=${message}`;
@@ -485,10 +496,12 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('modal-commercial').innerText = item.commercial || "Ask Me";
         document.getElementById('modal-source').innerText = item.sourceFile || "No";
 
-        // FAQ Logic
+        // Setup FAQ
         const faqContainer = document.getElementById("modal-faq");
         faqContainer.innerHTML = "";
         const faqs = faqByCategory[item.category] || [];
+        if(faqs.length === 0) faqContainer.innerHTML = "<p class='text-muted'>No specific FAQ for this service.</p>";
+        
         faqs.forEach(faq => {
             const faqItem = document.createElement("div");
             faqItem.className = "faq-mini";
@@ -502,9 +515,8 @@ document.addEventListener("DOMContentLoaded", () => {
             faqItem.querySelector(".faq-toggle").onclick = () => faqItem.classList.toggle("open");
             faqContainer.appendChild(faqItem);
         });
-        if (!faqs.length) faqContainer.innerHTML = "<p class='text-muted'>No specific FAQ for this service.</p>";
 
-        // Progress Bar
+        // Setup Progress Bar Queue
         const current = Number(item.queueCurrent);
         const max = Number(item.queueMax);
         const percent = Math.min((current / max) * 100, 100);
@@ -529,7 +541,7 @@ document.addEventListener("DOMContentLoaded", () => {
             orderBtn.style.pointerEvents = "auto";
         }
 
-        // Features List
+        // Setup Features List
         const listContainer = document.getElementById('modal-includes');
         listContainer.innerHTML = '';
         if(item.includes && item.includes.length > 0) {
@@ -540,24 +552,63 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // Media Embed
+        // --- NEW: SETUP CUSTOM VIDEO PLAYER ---
         const mediaContainer = document.getElementById('modal-media-container');
         mediaContainer.innerHTML = "";
         const link = item.previewLink;
-        if (link.includes("youtube.com") || link.includes("youtu.be")) {
-            mediaContainer.innerHTML = `<iframe src="${getSmartEmbedUrl(link)}?rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-        } else if (link.match(/\.(mp4|webm)$/)) {
-            mediaContainer.innerHTML = `<video controls muted playsinline><source src="${link}" type="video/mp4"></video>`;
+
+        if (link.match(/\.(mp4|webm|mov)$/)) {
+            // HTML Structure untuk Custom Player
+            mediaContainer.innerHTML = `
+                <div class="cyber-video-wrapper" id="cyber-wrapper">
+                    <video class="cyber-video-player" id="custom-video" src="${link}" playsinline loop></video>
+                    
+                    <!-- Loading Spinner -->
+                    <div class="cyber-loader" id="video-loader"></div>
+                    
+                    <!-- Big Center Play Button -->
+                    <div class="big-play-btn" id="big-play"><i class="fas fa-play"></i></div>
+
+                    <!-- Controls Bar -->
+                    <div class="custom-controls">
+                        <div class="progress-container" id="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        
+                        <div class="controls-row">
+                            <div class="left-controls">
+                                <button class="ctrl-btn" id="play-pause"><i class="fas fa-play"></i></button>
+                                <div class="volume-container">
+                                    <button class="ctrl-btn" id="mute-btn"><i class="fas fa-volume-up"></i></button>
+                                    <input type="range" class="volume-slider" id="vol-slider" min="0" max="1" step="0.1" value="1">
+                                </div>
+                                <span class="time-display">
+                                    <span id="curr-time">0:00</span> / <span id="dur-time">0:00</span>
+                                </span>
+                            </div>
+                            <div class="right-controls">
+                                <button class="ctrl-btn" id="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Jalankan Logika Player setelah HTML masuk
+            setTimeout(() => initCustomPlayer(), 100);
+
+        } else if (link.includes("youtube.com") || link.includes("youtu.be")) {
+            // YouTube Fallback
+            mediaContainer.innerHTML = `<iframe src="${getSmartEmbedUrl(link)}?rel=0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%; height:100%; border:none;"></iframe>`;
         } else {
-            mediaContainer.innerHTML = `<img src="${item.thumbnail}" alt="Preview">`;
+            // Image Fallback
+            mediaContainer.innerHTML = `<img src="${item.thumbnail}" alt="Preview" style="width:100%; height:100%; object-fit:contain;">`;
         }
 
-        // Recommendations Logic (BUG FIX: commissions -> commissionsData)
+        // Recommendations Logic
         const recommendList = document.getElementById("recommend-list");
         recommendList.innerHTML = "";
         const recommendMap = { Video: ["Shorts", "Audio"], MV: ["Audio"], Code: ["Transition"], Audio: ["Video"] };
         const targetCategories = recommendMap[item.category] || [];
-        
         const recommendations = commissionsData.filter(c => targetCategories.includes(c.category) && c.id !== item.id).slice(0, 3);
 
         recommendations.forEach(rec => {
@@ -569,7 +620,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         document.querySelector(".recommend-wrapper").style.display = recommendations.length ? "block" : "none";
 
-        // Bundle Reset
+        // Bundle Logic
         const addBtn = document.getElementById("add-bundle");
         addBtn.onclick = () => {
             if (bundleItems.find(b => b.id === item.id)) return;
@@ -577,11 +628,10 @@ document.addEventListener("DOMContentLoaded", () => {
             renderBundle();
         };
 
+        // Open Modal Animation
         lenis.stop();
         modal.classList.add('open');
-        lenis.stop(); // Hentikan scroll utama
 
-        // GSAP Modal Entrance
         const modalContent = modal.querySelector('.modal-content');
         const modalItems = modal.querySelectorAll('.info-section, .modal-header, .order-actions');
 
@@ -599,6 +649,130 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: "power2.out"
         });
     };
+
+    // 3. Logic Controller Video (Init Function)
+    function initCustomPlayer() {
+        const video = document.getElementById('custom-video');
+        const wrapper = document.getElementById('cyber-wrapper');
+        const playBtn = document.getElementById('play-pause');
+        const bigPlay = document.getElementById('big-play');
+        const icon = playBtn ? playBtn.querySelector('i') : null;
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+        const currTimeText = document.getElementById('curr-time');
+        const durTimeText = document.getElementById('dur-time');
+        const loader = document.getElementById('video-loader');
+        const muteBtn = document.getElementById('mute-btn');
+        const volSlider = document.getElementById('vol-slider');
+        const fullScreenBtn = document.getElementById('fullscreen-btn');
+
+        if(!video) return;
+
+        // A. Toggle Play/Pause
+        function togglePlay() {
+            if(video.paused || video.ended) {
+                video.play();
+                if(icon) icon.className = "fas fa-pause";
+                if(bigPlay) {
+                    bigPlay.style.opacity = "0";
+                    setTimeout(() => bigPlay.style.display = "none", 300);
+                }
+            } else {
+                video.pause();
+                if(icon) icon.className = "fas fa-play";
+                if(bigPlay) {
+                    bigPlay.style.display = "block";
+                    setTimeout(() => bigPlay.style.opacity = "1", 10);
+                }
+            }
+        }
+
+        if(playBtn) playBtn.addEventListener('click', togglePlay);
+        if(bigPlay) bigPlay.addEventListener('click', togglePlay);
+        video.addEventListener('click', togglePlay);
+
+        // B. Loading State
+        video.addEventListener('waiting', () => { if(loader) loader.style.display = "block"; });
+        video.addEventListener('canplay', () => { if(loader) loader.style.display = "none"; });
+        
+        // Show big play button initially
+        if(bigPlay) bigPlay.style.display = "block";
+
+        // C. Update Time & Progress
+        video.addEventListener('timeupdate', () => {
+            if(isNaN(video.duration)) return;
+            const percent = (video.currentTime / video.duration) * 100;
+            if(progressFill) progressFill.style.width = `${percent}%`;
+            if(currTimeText) currTimeText.innerText = formatTime(video.currentTime);
+            if(durTimeText) durTimeText.innerText = formatTime(video.duration);
+        });
+
+        video.addEventListener('loadedmetadata', () => {
+            if(durTimeText) durTimeText.innerText = formatTime(video.duration);
+        });
+
+        // D. Seek (Klik Progress Bar)
+        if(progressBar) {
+            progressBar.addEventListener('click', (e) => {
+                const width = progressBar.clientWidth;
+                const clickX = e.offsetX;
+                const duration = video.duration;
+                video.currentTime = (clickX / width) * duration;
+            });
+        }
+
+        // E. Volume Control
+        if(volSlider) {
+            volSlider.addEventListener('input', (e) => {
+                video.volume = e.target.value;
+                updateVolIcon();
+            });
+        }
+
+        if(muteBtn) {
+            muteBtn.addEventListener('click', () => {
+                video.muted = !video.muted;
+                updateVolIcon();
+            });
+        }
+
+        function updateVolIcon() {
+            if(!muteBtn) return;
+            const volIcon = muteBtn.querySelector('i');
+            if(video.muted || video.volume === 0) {
+                volIcon.className = "fas fa-volume-mute";
+                if(volSlider) volSlider.value = 0;
+            } else if (video.volume < 0.5) {
+                volIcon.className = "fas fa-volume-down";
+            } else {
+                volIcon.className = "fas fa-volume-up";
+            }
+        }
+
+        // F. Fullscreen
+        if(fullScreenBtn) {
+            fullScreenBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    if(wrapper.requestFullscreen) wrapper.requestFullscreen();
+                    else if(wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
+                } else {
+                    if(document.exitFullscreen) document.exitFullscreen();
+                }
+            });
+        }
+        
+        // G. Reset on End
+        video.addEventListener('ended', () => {
+            if(icon) icon.className = "fas fa-redo"; 
+            if(bigPlay) {
+                bigPlay.innerHTML = '<i class="fas fa-redo"></i>';
+                bigPlay.style.display = "block";
+                bigPlay.style.opacity = "1";
+            }
+        });
+    }
+
+    // --- UPDATE END ---
 
     // 1. Fungsi untuk menghapus item dari array bundle
     window.removeFromBundle = (id) => {
