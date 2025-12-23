@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "title": "VTuber Stream Highlight",
+    "category": "Video",
+    "price": "Start from $35",
+    "queueCurrent": "1",
+    "queueMax": "3",
+    "thumbnail": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80",
+    "description": "Funny moments compilation with memes, subtitles, and zoom edits.",
+    "fullDescription": "I will turn your 3-hour stream into a 10-minute engaging highlight video. Includes motion tracking subtitles, copyright-free BGM, sound effects, and meme overlays.",
+    "deliveryTime": "3 - 5 Days",
+    "previewLink": "https://www.youtube.com/embed/dQw4w9WgXcQ" 
+  },
+  {
+    "id": 2,
+    "title": "Stinger Transition",
+    "category": "Transition",
+    "price": "$25 Flat",
+    "queueCurrent": "0",
+    "queueMax": "5",
+    "thumbnail": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80",
+    "description": "Custom animated transition with your logo and brand colors.",
+    "fullDescription": "Smooth stinger transition in .WEBM format (transparent). Compatible with OBS and Streamlabs. Includes sound design.",
+    "deliveryTime": "2 Days",
+    "previewLink": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": 3,
+    "title": "CSS Chat Overlay",
+    "category": "Code",
+    "price": "$20 - $40",
+    "queueCurrent": "0",
+    "queueMax": "5",
+    "thumbnail": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=80",
+    "description": "Highly customizable chat box for YouTube/Twitch streams.",
+    "fullDescription": "Custom CSS code for Streamlabs/Streamelements. Features: Role specific colors, animations on new messages, and fully responsive design.",
+    "deliveryTime": "1 - 3 Days",
+    "previewLink": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": 4,
+    "title": "VTuber MV Production",
+    "category": "MV",
+    "price": "Start from $100",
+    "queueCurrent": "1",
+    "queueMax": "5",
+    "thumbnail": "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&w=500&q=80",
+    "description": "High quality Music Video for Covers or Original Songs.",
+    "fullDescription": "Full MV production including kinetic typography, visualizers, and particle effects suitable for your Lore. (Note: Illustration art must be provided by client).",
+    "deliveryTime": "7 - 14 Days",
+    "previewLink": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": 5,
+    "title": "Custom Stream BGM",
+    "category": "Audio",
+    "price": "$50 - $80",
+    "queueCurrent": "2",
+    "queueMax": "5",
+    "thumbnail": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=500&q=80",
+    "description": "Loopable background music for chatting or gaming.",
+    "fullDescription": "Custom composed BGM tailored to your VTuber aesthetic. Genres: Lo-fi, Synthwave, Kawaii Future Bass, or Orchestral. You get full commercial rights.",
+    "deliveryTime": "5 - 7 Days",
+    "previewLink": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": 6,
+    "title": "Vertical Shorts / TikTok",
+    "category": "Shorts",
+    "price": "$15 / Video",
+    "queueCurrent": "3",
+    "queueMax": "7",
+    "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=500&q=80",
+    "description": "Engaging portrait videos for TikTok, Reels, & YouTube Shorts.",
+    "fullDescription": "Fast-paced editing designed for retention. Includes dynamic subtitles (Alex Hormozi style), sound effects, and motion graphics. Aspect ratio 9:16.",
+    "deliveryTime": "1 Day",
+    "previewLink": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": 7,
+    "title": "EMD POP",
+    "category": "Audio",
+    "price": "200 - 350K",
+    "queueCurrent": "1",
+    "queueMax": "5",
+    "thumbnail": "https://files.catbox.moe/45xnxh.png",
+    "description": "Music For BGM",
+    "fullDescription": "Musik dengan genre EDM yang mungkin cocok dengan karakter atau lore kamu",
+    "deliveryTime": "3 - 4 Days",
+    "previewLink": "https://files.catbox.moe/isgmgx.mp4"
+  }
+]

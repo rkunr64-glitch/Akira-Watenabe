@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "VTuber Luna",
+    "avatar": "assets/testimonials/Screenshot_467.png",
+    "rating": 5,
+    "text": "My stream highlights feel alive now. Retention increased massively.",
+    "date": "2024-01-20"
+  },
+  {
+    "id": 2,
+    "name": "Rei Ch.",
+    "avatar": "assets/testimonials/Screenshot_468.png",
+    "rating": 5,
+    "text": "Akira understands VTuber timing perfectly. Highly recommended.",
+    "date": "2024-02-15"
+  }
+]

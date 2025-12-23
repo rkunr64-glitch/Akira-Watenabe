@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akira Edits | VTuber Tech Portfolio</title>
+    
+    <!-- Fonts: Techy & Clean -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="system-status">
+        <div class="status-row">
+            <span class="status-label">SYS_TIME:</span>
+            <span id="live-time">00:00:00</span>
+        </div>
+        <div class="status-row">
+            <span class="status-label">LOC:</span>
+            <span>IDN_SERVER_01</span>
+        </div>
+        <div class="status-row">
+            <span class="status-label">STATUS:</span>
+            <span class="status-online">ONLINE <span class="blink">●</span></span>
+        </div>
+    </div>
+
+
+    <div class="crt-overlay"></div>
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!--Paticle-->
+    <canvas id="particle-bg"></canvas>
+
+
+    <!-- Loading Screen -->
+    <div id="loader" >
+        <div class="loader-content">
+            
+            <!--SISTEM TITLE-->
+            <div class="glitch-text" data-text="AKIRA_SYSTEMS">
+                AKIRA_SYSTEMS
+            </div>
+
+            <!--SISTEM SCAN-->
+            <div class="system-scan"></div>
+
+            <!--BOOT LOG-->
+            <div class="boot-log" id="boot-log"></div>
+
+            <!--SEGMENTED LODING BAR-->
+            <div class="loading-bar segmented">
+                <div class="bar-segment"></div>
+                <div class="bar-segment"></div>
+                <div class="bar-segment"></div>
+                <div class="bar-segment"></div>
+                <div class="bar-segment"></div>
+                <div class="bar-segment"></div>
+                <div class="bar-segment"></div>
+                <div class="bar-segment"></div>
+            </div>
+
+            <!--STATUS-->
+            <div class="boot-status">
+                STATUS: <span id="boot-status-text">INITIALIZING</span>
+            </div>
+
+            <!--INSTRUCTION-->
+            <div class="boot-interaction">
+                <div class="boot-ring"></div>
+                <div class="boot-click-text">
+                    CLICK TO INITIALIZE SYSTEM
+                </div>
+            </div>
+
+            <audio id="boot-beep" src="assets/sounds/beep-329314.mp3" preload="auto"></audio>
+            <audio id="boot-confirm" src="assets/sounds/sample_confirm_success02_kofi_by_miraclei-360154.mp3"></audio>
+            <audio id="sfx-hover" src="assets/sounds/ui-sound-374228.mp3"></audio>
+            <audio id="sfx-click" src="assets/sounds/futuristic-ui-positive-selection-davies-aguirre-2-2-00-00.mp3"></audio>
+
+
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">AKIRA<span class="dot">.</span>EXE</div>
+
+        <ul class="nav-links">
+            <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
+            <li><a href="#protocol" class="nav-link" data-page="protocol">Protocol</a></li>
+            <li><a href="#portfolio" class="nav-link" data-page="portfolio">Commissions</a></li>
+            <li><a href="#specs" class="nav-link" data-page="specs">Skills</a></li>
+            <li><a href="#about" class="nav-link" data-page="about">About</a></li>
+            <li><a href="#testimonials" class="nav-link" data-page="testimonials">Testimonials</a></li>
+            <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+            <li><a href="#faq" class="nav-link" data-page="faq">FAQ</a></li>
+        </ul>
+
+        <div class="mobile-menu-btn"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <!-- Main Container -->
+    <main id="app-container">
+        
+        <!-- HOME PAGE - SYSTEM OVERRIDE -->
+        <section id="home" class="page active-page">
+            
+            <!-- 1. Background Decor & HUD Frame -->
+            <div class="hero-bg-elements">
+                <div class="hero-grid"></div>
+                <div class="big-circle"></div>
+                
+                <!-- Code Rain Vertical -->
+                <div class="floating-code left-code">01010011 01011001</div>
+                <div class="floating-code right-code">A_K_I_R_A_S_Y_S</div>
+
+                <!-- HUD Corner Brackets (Pojokan Kamera) -->
+                <div class="hud-frame">
+                    <span class="corner tl"></span>
+                    <span class="corner tr"></span>
+                    <span class="corner bl"></span>
+                    <span class="corner br"></span>
+                    <div class="scan-bar"></div> <!-- Garis scan berjalan -->
+                </div>
+            </div>
+
+            <div class="hero-container">
+                
+                <!-- KOLOM KIRI: TEKS UTAMA -->
+                <div class="hero-text-zone">
+                    
+                    <!-- Badge dengan status blink -->
+                    <div class="sys-badge">
+                        <span class="blink-dot"></span> 
+                        <span class="badge-text">SYSTEM_OVERRIDE_V2.0 // TARGET_LOCKED</span>
+                    </div>
+
+                    <!-- Judul dengan Dekorasi Jepang -->
+                    <div class="title-wrapper">
+                        <h1 class="glitch-hero" data-text="AKIRA">AKIRA</h1>
+                        <div class="deco-jap">アキラ</div> <!-- Teks Jepang Transparan -->
+                    </div>
+                    
+                    <div class="hero-role-wrapper">
+                        <div class="role-track">
+                            <span>VIDEO EDITOR</span>
+                            <span class="sep">/</span>
+                            <span>MOTION GRAPHICS</span>
+                            <span class="sep">/</span>
+                            <span>VTUBER ASSETS</span>
+                        </div>
+                        <div class="role-bar"></div>
+                    </div>
+
+                    <p class="hero-desc">
+                        Merancang visual ritmis untuk kreator konten.
+                        Fokus pada <span class="txt-highlight">[RETENTION]</span>, <span class="txt-highlight">[AESTHETICS]</span>, dan <span class="txt-highlight">[STORYTELLING]</span>.
+                    </p>
+
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="navigateTo('portfolio')">
+                            <i class="fas fa-play"></i> VIEW_COMMISSIONS
+                        </button>
+                        <button class="btn btn-outline" onclick="navigateTo('contact')">
+                            INITIATE_CONTACT
+                        </button>
+                    </div>
+
+                    <!-- Stats dengan Visual Bar -->
+                    <div class="hero-stats-panel">
+                        <div class="stat-box">
+                            <div class="stat-top">
+                                <strong>60+</strong>
+                                <span class="stat-label">FPS RENDER</span>
+                            </div>
+                            <div class="stat-progress"><div class="stat-fill" style="width:100%"></div></div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-top">
+                                <strong>100%</strong>
+                                <span class="stat-label">SYNC RATE</span>
+                            </div>
+                            <div class="stat-progress"><div class="stat-fill" style="width:95%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KOLOM KANAN: HOLO VIDEO DECK -->
+                <div class="hero-visual-zone">
+                    
+                    <!-- Garis Konektor ke Judul -->
+                    <div class="tech-connector">
+                        <div class="connector-dot"></div>
+                        <div class="connector-line"></div>
+                    </div>
+
+                    <div class="holo-deck">
+                        <!-- Decorative Bars around video -->
+                        <div class="deck-bar top">
+                            <span>REC: <span id="rec-time">00:00:00</span></span>
+                            <span class="mode-label">MODE: CINEMATIC</span>
+                        </div>
+                        
+                        <div class="deck-side left"></div>
+                        <div class="deck-side right"></div>
+
+                        <!-- Video Container -->
+                        <div class="video-screen">
+                            <div class="screen-overlay"></div> <!-- Scanline effect -->
+                            <div class="noise-overlay"></div>  <!-- Noise Grain -->
+                            
+                            <div class="slideshow">
+                                <video class="slide-video active"
+                                    src="assets/previews/Collide Waguri Kaoruko Final (online-video-cutter.com).mp4"
+                                    autoplay muted loop playsinline>
+                                </video>
+                                <video class="slide-video"
+                                    src="assets/previews/PMV Zee Hawysia Special Anniversary (online-video-cutter.com).mp4"
+                                    autoplay muted loop playsinline>
+                                </video>
+                            </div>
+
+                            <!-- HUD Overlay di atas video -->
+                            <div class="video-hud">
+                                <span class="hud-tl">CAM_01 [ACTIVE]</span>
+                                <span class="hud-tr">LIVE ●</span>
+                                <span class="hud-bl">ISO 800</span>
+                                <span class="hud-br">4K_RES</span>
+                                <div class="hud-center-cross"></div>
+                                <div class="hud-focus-box"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="deck-bar bottom">
+                            <div class="audio-viz">
+                                <span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                            <span>AUDIO_WAVE_VISUALIZER [ACTIVE]</span>
+                        </div>
+                    </div>
+
+                    <!-- Back Decor behind video -->
+                    <div class="deco-ring"></div>
+                    <div class="deco-ring outer"></div>
+                </div>
+
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-trigger">
+                <div class="mouse-icon"></div>
+                <span>SCROLL_DOWN</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+
+        </section>
+
+        <!-- PORTFOLIO PAGE -->
+        <section id="portfolio" class="page">
+            <h2 class="section-title" data-aos="fade-down">Commission <span class="neon-text">Menu</span></h2>
+            <div class="filter-bar" data-aos="fade-up" data-aos-delay="100">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="Video">Video</button>
+                <button class="filter-btn" data-filter="Shorts">Shorts</button>
+                <button class="filter-btn" data-filter="MV">MV</button>
+                <button class="filter-btn" data-filter="Audio">BGM</button>
+                <button class="filter-btn" data-filter="Transition">Overlay/FX</button>
+            </div>
+            
+            <div class="portfolio-grid" id="portfolio-grid" data-aos="zoom-in-up">
+                <!-- Items injected via JS from commissions.json -->
+            </div>
+        </section>
+
+        <!-- PROTOCOL / WORKFLOW PAGE -->
+        <section id="protocol" class="page">
+            <h2 class="section-title">Execution <span class="neon-text">Protocol</span></h2>
+            
+            <div class="protocol-container">
+                <!-- Connecting Line (Garis Tengah) -->
+                 <div class="circuit-line">
+                    <div class="circuit-fill"></div>
+                </div>
+                
+                <!-- Step 1 -->
+                <div class="protocol-step left">
+                    <div class="step-content" data-step="1">
+                        <div class="step-icon"><i class="fas fa-satellite-dish"></i></div>
+                        <div class="step-text">
+                            <h3>01. Initialization</h3>
+                            <p>Hubungi via Discord. Kirim brief, referensi, dan aset mentah (footage/audio).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="protocol-step right">
+                    <div class="step-content" data-step="2">
+                        <div class="step-icon"><i class="fas fa-file-contract"></i></div>
+                        <div class="step-text">
+                            <h3>02. Handshake</h3>
+                            <p>Diskusi harga & deal. Invoice dikirim (DP 50% atau Full Payment di awal).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="protocol-step left">
+                    <div class="step-content" data-step="3">
+                        <div class="step-icon"><i class="fas fa-microchip"></i></div>
+                        <div class="step-text">
+                            <h3>03. Processing</h3>
+                            <p>Proses editing dimulai. Update progress akan dikirimkan secara berkala.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="protocol-step right">
+                    <div class="step-content" data-step="4">
+                        <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="step-text">
+                            <h3>04. Deployment</h3>
+                            <p>Preview file dikirim. Revisi (jika ada). Final render dikirim setelah pelunasan.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BONUS: DATA STREAM MARQUEE -->
+            <div class="data-stream-wrapper">
+                <div class="data-stream-track">
+                    <span>// SYSTEM OPTIMIZED // RETENTION INCREASED // HIGH_QUALITY_RENDER // 60FPS // NO_LAG //</span>
+                    <span>// SYSTEM OPTIMIZED // RETENTION INCREASED // HIGH_QUALITY_RENDER // 60FPS // NO_LAG //</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SYSTEM MASTERY / TECH SPECS PAGE -->
+        <section id="specs" class="page">
+            <h2 class="section-title">System <span class="neon-text">Modules</span></h2>
+            
+            <div class="hex-grid-container">
+                
+                <!-- Decoration Background Text -->
+                <div class="bg-deco-text">MASTERY_LEVEL_99</div>
+
+                <div class="hex-grid">
+                    
+                    <!-- ITEM 1: AFTER EFFECTS -->
+                    <div class="hex-wrapper">
+                        <div class="hex-content">
+                            <div class="hex-icon"><i class="fas fa-layer-group"></i></div>
+                            <h3>AE_CORE</h3>
+                            <p>Motion Graphics</p>
+                            <div class="power-bar" style="--p: 95%"></div>
+                        </div>
+                        <div class="hex-border"></div>
+                    </div>
+
+                    <!-- ITEM 2: PREMIERE PRO -->
+                    <div class="hex-wrapper">
+                        <div class="hex-content">
+                            <div class="hex-icon"><i class="fas fa-film"></i></div>
+                            <h3>PR_CUT</h3>
+                            <p>Storytelling</p>
+                            <div class="power-bar" style="--p: 90%"></div>
+                        </div>
+                        <div class="hex-border"></div>
+                    </div>
+
+                    <!-- ITEM 3: SOUND DESIGN -->
+                    <div class="hex-wrapper">
+                        <div class="hex-content">
+                            <div class="hex-icon"><i class="fas fa-wave-square"></i></div>
+                            <h3>SFX_SYNTH</h3>
+                            <p>Audio Mixing</p>
+                            <div class="power-bar" style="--p: 85%"></div>
+                        </div>
+                        <div class="hex-border"></div>
+                    </div>
+
+                    <!-- ITEM 4: PHOTOSHOP -->
+                    <div class="hex-wrapper">
+                        <div class="hex-content">
+                            <div class="hex-icon"><i class="fas fa-image"></i></div>
+                            <h3>PSD_ART</h3>
+                            <p>Thumbnails</p>
+                            <div class="power-bar" style="--p: 88%"></div>
+                        </div>
+                        <div class="hex-border"></div>
+                    </div>
+
+                    <!-- ITEM 5: BLENDER (Contoh 3D) -->
+                    <div class="hex-wrapper">
+                        <div class="hex-content">
+                            <div class="hex-icon"><i class="fas fa-cube"></i></div>
+                            <h3>3D_ENGINE</h3>
+                            <p>Blender / CGI</p>
+                            <div class="power-bar" style="--p: 75%"></div>
+                        </div>
+                        <div class="hex-border"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT PAGE UPGRADED -->
+        <section id="about" class="page">
+            <div class="cyber-profile-container">
+                
+                <!-- KOLOM KIRI: VISUAL (Holo Profile) -->
+                <div class="profile-visual-col" data-aos="fade-right">
+                    <div class="holo-frame">
+                        <div class="holo-content">
+                            <!-- FOTO PROFIL -->
+                            <img src="assets/unduhan (1).jpeg" alt="Profile" class="glitch-img">
+                            <img src="assets/unduhan (1).jpeg" alt="Profile" class="glitch-layer">
+                            <div class="scan-line"></div>
+                            <div class="corner-brackets"></div>
+                        </div>
+                        
+                        <div class="visual-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">CLASS</span>
+                                <span class="stat-val">VIDEO_ARCHITECT</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">LEVEL</span>
+                                <span class="stat-val highlight">99</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">STATUS</span>
+                                <span class="stat-val online">ONLINE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KOLOM KANAN: DATA (Terminal & Skills) -->
+                <div class="profile-data-col" data-aos="fade-left">
+                    
+                    <div class="data-header">
+                        <h2 class="cyber-name">AKIRA<span class="blink">_</span>WATANABE</h2>
+                        <div class="id-badge">ID: #9315-X</div>
+                    </div>
+
+                    <!-- TERMINAL BIO -->
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="term-title">bio_data.exe</span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="code-line"><span class="cmd">> SUBJECT:</span> VTuber Content Specialist</p>
+                            <p class="code-line"><span class="cmd">> MISSION:</span> Maximize Viewer Retention</p>
+                            <p class="code-line"><span class="cmd">> STYLE:</span> Fast-Paced / Meme / Cyber-Overlay</p>
+                            <br>
+                            <p class="typing-effect">
+                                "Saya bukan sekadar editor. Saya adalah arsitek visual yang mengubah VOD mentah menjadi konten viral yang ritmis dan penuh karakter."
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- CORE ATTRIBUTES (Stats dengan Progress Bar Animasi) -->
+                    <div class="attributes-grid">
+                        <div class="attr-box">
+                            <span class="attr-icon"><i class="fas fa-bolt"></i></span>
+                            <div class="attr-info">
+                                <h4>Speed</h4>
+                                <div class="progress-bar-about"><div class="fill-about" data-width="95%"></div></div>
+                            </div>
+                        </div>
+                        <div class="attr-box">
+                            <span class="attr-icon"><i class="fas fa-brain"></i></span>
+                            <div class="attr-info">
+                                <h4>Creativity</h4>
+                                <div class="progress-bar-about"><div class="fill-about" data-width="90%"></div></div>
+                            </div>
+                        </div>
+                        <div class="attr-box">
+                            <span class="attr-icon"><i class="fas fa-laugh-squint"></i></span>
+                            <div class="attr-info">
+                                <h4>Humor</h4>
+                                <div class="progress-bar-about"><div class="fill-about" data-width="100%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- INSTALLED MODULES (Tech Stack) -->
+                    <div class="modules-section">
+                        <h3 class="modules-title"><i class="fas fa-microchip"></i> INSTALLED_MODULES</h3>
+                        <div class="tech-chips-about">
+                            <div class="tech-chip-item ae"><i class="fas fa-layer-group"></i> After Effects</div>
+                            <div class="tech-chip-item pr"><i class="fas fa-video"></i> Premiere Pro</div>
+                            <div class="tech-chip-item ps"><i class="fas fa-image"></i> Photoshop</div>
+                            <div class="tech-chip-item fl"><i class="fas fa-music"></i> FL Studio</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!--TESTIMONIALS SECTION-->
+        <section id="testimonials" class="page">
+            <div class="testimonial-container">
+                <h2 class="section-title">Client <span class="neon-text">Database</span></h2>
+                
+                <!-- BAGIAN 1: LIST REVIEW (Akan diisi JS dari JSON) -->
+                <div class="testimonial-grid" id="testimonial-grid">
+                    <!-- Data JSON akan masuk sini -->
+                </div>
+
+                <!-- BAGIAN 2: FORM INPUT REVIEW -->
+                <div class="review-form-wrapper" data-aos="fade-up">
+                    <div class="form-header">
+                        <h3><i class="fas fa-pen-square"></i> SUBMIT_FEEDBACK_DATA</h3>
+                        <p>Input will be sent to secure server (Discord) for validation.</p>
+                    </div>
+
+                    <form id="review-form" class="cyber-form">
+                        <div class="input-group">
+                            <label>CODENAME (NAME)</label>
+                            <input type="text" id="review-name" placeholder="Your VTuber Name" required>
+                            <span class="input-border"></span>
+                        </div>
+
+                        <div class="input-group">
+                            <label>RATING SEQUENCE</label>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="rating" value="5" checked /><label for="star5" title="5 stars">★</label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★</label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>FEEDBACK LOG</label>
+                            <textarea id="review-text" rows="3" placeholder="Write your experience..." required></textarea>
+                            <span class="input-border"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary full-width">
+                            <i class="fas fa-upload"></i> UPLOAD REVIEW
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION UPGRADED -->
+        <section id="faq" class="page">
+            <div class="faq-layout">
+                <div class="faq-header-side">
+                    <h2 class="section-title">System <span class="neon-text">Knowledge</span></h2>
+                    <p class="faq-subtitle">ACCESSING DATABASE_V2.0 //<br>COMMON_QUERIES_LOADED</p>
+                    <div class="faq-deco-box">
+                        <div class="spin-ring"></div>
+                        <i class="fas fa-database"></i>
+                    </div>
+                </div>
+                
+                <div class="faq-list-container">
+                    
+                    <!-- Item 1 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-num">01</span>
+                            <span class="faq-text">Berapa kali revisi yang saya dapatkan?</span>
+                            <div class="faq-toggle-icon">
+                                <span></span><span></span>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="answer-box">
+                                <p>Sistem standar memberikan <strong>2x Revisi Mayor</strong> (perubahan alur, timing, pacing) dan <strong>Unlimited Revisi Minor</strong> (typo, warna subtitle, glitch kecil) selama fase produksi. Revisi tambahan di luar kesepakatan akan dikenakan biaya tambahan.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-num">02</span>
+                            <span class="faq-text">Apakah harga sudah termasuk Commercial Use?</span>
+                            <div class="faq-toggle-icon">
+                                <span></span><span></span>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="answer-box">
+                                <p><span class="txt-highlight">✔ YES.</span> Semua commission sudah termasuk hak monetisasi (YouTube, Twitch, TikTok). Anda bebas menggunakan hasil video untuk keperluan channel Anda tanpa biaya royalti tambahan.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-num">03</span>
+                            <span class="faq-text">Berapa lama proses pengerjaan (ETA)?</span>
+                            <div class="faq-toggle-icon">
+                                <span></span><span></span>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="answer-box">
+                                <ul class="faq-list">
+                                    <li><strong>Shorts/TikTok:</strong> 1–2 Hari</li>
+                                    <li><strong>CSS Live Chat:</strong> 2–5 Hari </li>
+                                    <li><strong>Stream Highlight:</strong> 3–5 Hari</li>
+                                    <li><strong>Music Video (MV):</strong> 7–14 Hari</li>
+                                </ul>
+                                <p class="note">*Waktu dapat berubah tergantung antrian dan kompleksitas request.*</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 (New) -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-num">04</span>
+                            <span class="faq-text">Apakah bisa request "Rush Order"?</span>
+                            <div class="faq-toggle-icon">
+                                <span></span><span></span>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="answer-box">
+                                <p>Bisa, jika slot waktu saya memungkinkan. Rush Order (Prioritas Utama) akan dikenakan biaya tambahan sebesar <strong>+25% hingga +50%</strong> dari harga total, tergantung seberapa cepat deadline yang diminta.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 (New) -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-num">05</span>
+                            <span class="faq-text">Apakah saya mendapatkan Project File?</span>
+                            <div class="faq-toggle-icon">
+                                <span></span><span></span>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="answer-box">
+                                <p>Secara default <strong>TIDAK</strong>. Anda hanya menerima hasil render final (.mp4/.mov). Jika Anda membutuhkan Project File (.aep/.prproj) untuk keperluan arsip atau edit ulang sendiri, akan dikenakan biaya "Buyout" sebesar <strong>+50% dari harga deal</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 6 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-num">06</span>
+                            <span class="faq-text">Apa yang harus saya siapkan sebelum order?</span>
+                            <div class="faq-toggle-icon">
+                                <span></span><span></span>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="answer-box">
+                                <p>Untuk hasil maksimal, mohon siapkan:</p>
+                                <ul class="faq-list">
+                                    <li>Link Stream VOD / Raw Footage (Google Drive).</li>
+                                    <li><strong>Timestamp</strong> momen lucu/penting (Sangat Wajib).</li>
+                                    <li>Referensi style (Link video VTuber lain).</li>
+                                    <li>Aset Character (PNG) jika ingin dimasukkan ke thumbnail/video.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 7 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-num">07</span>
+                            <span class="faq-text">Metode pembayaran apa yang tersedia?</span>
+                            <div class="faq-toggle-icon">
+                                <span></span><span></span>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="answer-box">
+                                <p>Saya menerima pembayaran via:</p>
+                                <p>🇮🇩 <strong>Lokal:</strong> BNI, BRI, ShopeePay, OVO, GoPay, Dana.<br>
+                                🌍 <strong>Global:</strong> PayPal (USD).</p>
+                                <p>Sistem DP 50% di awal untuk mulai pengerjaan, pelunasan saat preview video dikirim.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT / UPLINK SECTION -->
+        <section id="contact" class="page">
+            <div class="uplink-wrapper">
+                
+                <!-- DECORATION BG -->
+                <div class="grid-map-bg"></div>
+
+                <div class="uplink-interface">
+                    
+                    <!-- HEADER -->
+                    <div class="uplink-header">
+                        <h2 class="section-title">Establish <span class="neon-text">Connection</span></h2>
+                        <div class="connection-status">
+                            <span class="ping-dot"></span>
+                            <span class="status-text">ENCRYPTION: AES-256 // SIGNAL: STRONG</span>
+                        </div>
+                    </div>
+
+                    <div class="uplink-grid">
+
+                        <!-- LEFT: COMM CHANNELS & RADAR -->
+                        <div class="comm-panel">
+                            
+                            <!-- RADAR ANIMATION -->
+                            <div class="radar-container">
+                                <div class="radar-screen">
+                                    <div class="radar-sweep"></div>
+                                    <div class="target-dot t1"></div>
+                                    <div class="target-dot t2"></div>
+                                </div>
+                                <div class="radar-label">SCANNING_FREQ...</div>
+                            </div>
+
+                            <!-- SOCIAL BUTTONS -->
+                            <div class="channel-list">
+                                <a href="https://discordapp.com/users/931517941659344946" target="_blank" class="channel-card discord-ch">
+                                    <div class="ch-icon"><i class="fab fa-discord"></i></div>
+                                    <div class="ch-info">
+                                        <span class="ch-label">PRIORITY CHANNEL</span>
+                                        <span class="ch-name">Discord DM</span>
+                                    </div>
+                                    <div class="ch-status">OPEN</div>
+                                </a>
+
+                                <a href="https://x.com/AkiraWatanabe0" target="_blank" class="channel-card x-ch">
+                                    <div class="ch-icon"><i class="fab fa-twitter"></i></div>
+                                    <div class="ch-info">
+                                        <span class="ch-label">SECONDARY</span>
+                                        <span class="ch-name">Twitter / X</span>
+                                    </div>
+                                    <div class="ch-status">SLOW</div>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT: TRANSMISSION FORM -->
+                        <div class="form-panel">
+                            <div class="panel-deco-top">TRANSMISSION_PROTOCOL_V2</div>
+                            
+                            <form id="contact-form" class="cyber-form">
+                                <div class="input-group">
+                                    <label>CODENAME (NAME)</label>
+                                    <input type="text" placeholder="Enter your ID..." required>
+                                    <span class="input-border"></span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>FREQUENCY (EMAIL)</label>
+                                    <input type="email" placeholder="email@server.com" required>
+                                    <span class="input-border"></span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>MISSION TYPE</label>
+                                    <select>
+                                        <option>Stream Highlight</option>
+                                        <option>Shorts / TikTok</option>
+                                        <option>Music Video (MV)</option>
+                                        <option>CSS Live Chat</option>
+                                    </select>
+                                    <span class="input-border"></span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>BRIEFING DATA</label>
+                                    <textarea rows="4" placeholder="Describe your request..." required></textarea>
+                                    <span class="input-border"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary full-width">
+                                    <i class="fas fa-satellite-dish"></i> INITIATE UPLINK
+                                </button>
+
+                                <div class="form-success">
+                                    <i class="fas fa-check"></i> TRANSMISSION SENT SUCCESSFULLY
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <!-- FOOTER: PAYMENT CHIPS -->
+                    <div class="credits-dock">
+                        <h4 class="dock-title">ACCEPTED_CREDITS</h4>
+                        <div class="chips-container">
+                            
+                            <!-- Chip 1 -->
+                            <div class="credit-chip">
+                                <div class="chip-head">BANK</div>
+                                <div class="chip-body">BNI / BRI / BSI</div>
+                                <i class="fas fa-university chip-icon"></i>
+                            </div>
+
+                            <!-- Chip 2 -->
+                            <div class="credit-chip">
+                                <div class="chip-head">E-WALLET</div>
+                                <div class="chip-body">DANA / GOPAY / SHOPEEPAY / OVO</div>
+                                <i class="fas fa-wallet chip-icon"></i>
+                            </div>
+
+                            <!-- Chip 3 -->
+                            <div class="credit-chip">
+                                <div class="chip-head">GLOBAL</div>
+                                <div class="chip-body">PAYPAL</div>
+                                <i class="fas fa-globe chip-icon"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- MODAL POPUP (VGEN STYLE - BARU) -->
+    <div id="commission-modal" class="modal-overlay">
+        <div class="modal-content vgen-layout">
+            <button class="close-modal">&times;</button>
+            
+            <!-- KOLOM KIRI: Media Preview (Video/Gambar) -->
+            <div class="modal-media-col">
+                <div id="modal-media-container">
+                    <!-- Iframe/Video akan masuk sini otomatis via Script -->
+                </div>
+            </div>
+
+            <!-- KOLOM KANAN: Detail Info (Bisa di-scroll) -->
+            <div class="modal-info-col" data-lenis-prevent>
+
+                <!-- Bagian Header (Judul & Harga) -->
+                <div class="modal-header">
+                    <div class="modal-badges">
+                        <span class="badge-tech" id="modal-cat-badge">CATEGORY</span>
+                        <span class="badge-tech" id="modal-time-badge">3 Days</span>
+                        <span class="badge-tech" id="modal-queue"></span>
+                    </div>
+                    <h2 id="modal-title">Service Title</h2>
+                    <div class="price-block">
+                        <span id="modal-price" class="main-price">$00</span>
+                    </div>
+                    <div class="order-actions">
+                        <a id="order-discord" class="btn btn-primary" target="_blank">
+                            Order via Discord
+                        </a>
+                    </div>
+                    <div class="queue-wrapper">
+                        <div class="queue-label">
+                            Queue Progress
+                            <span id="queue-text">0 / 0</span>
+                        </div>
+                        <div class="queue-bar">
+                            <div class="queue-fill" id="queue-fill"></div>
+                        </div>
+                    </div>
+                    <div class="recommend-wrapper">
+                        <h4 class="recommend-title">Recommended Service</h4>
+                        <div class="recommend-list" id="recommend-list"></div>
+                    </div>
+                </div>
+
+                <hr class="cyber-divider">
+
+                <!-- Deskripsi -->
+                <div class="info-section">
+                    <h3><i class="fas fa-align-left"></i> Description</h3>
+                    <p id="modal-desc">Service description goes here.</p>
+                </div>
+
+                <!-- Apa yang didapat (List) -->
+                <div class="info-section">
+                    <h3><i class="fas fa-box-open"></i> What You Get</h3>
+                    <ul id="modal-includes" class="feature-list">
+                        <!-- List item akan masuk sini otomatis -->
+                    </ul>
+                    <!-- FAQ KONTEKSTUAL -->
+                    <div class="info-section">
+                        <h3>Service FAQ</h3>
+
+                        <div id="modal-faq" class="modal-faq">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kotak Detail (Revisi, Komersial, dll) -->
+                <div class="info-section">
+                    <h3><i class="fas fa-sync-alt"></i> Terms & Revisions</h3>
+                    <div class="terms-grid">
+                        <div class="term-box">
+                            <span class="term-label">Revisions</span>
+                            <span class="term-val" id="modal-revisions">2x Major</span>
+                        </div>
+                        <div class="term-box">
+                            <span class="term-label">Commercial</span>
+                            <span class="term-val" id="modal-commercial">Included</span>
+                        </div>
+                        <div class="term-box">
+                            <span class="term-label">Source File</span>
+                            <span class="term-val" id="modal-source">No</span>
+                        </div>
+                        <div class="term-box">
+                            <span class="term-label">Queue</span>
+                            <span class="term-val" id="modal-queue">0 / 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Order -->
+                <div class="modal-footer-action">
+                    <button class="btn btn-primary full-width" onclick="navigateTo('contact'); closeModal()">
+                        <i class="fas fa-paper-plane"></i> Request Commission
+                    </button>
+                </div>
+                <div class="bundle-wrapper">
+                    <button id="add-bundle" class="btn btn-outline">
+                        + Add to Bundle
+                    </button>
+
+                    <div class="bundle-box" id="bundle-box">
+                        <h4>Your Bundle</h4>
+                        <ul id="bundle-list"></ul>
+
+                        <div class="bundle-footer">
+                            <span id="bundle-total">Total -</span>
+                            <a id="bundle-order" class="btn btn-primary" target="_blank">
+                                Order Bundle
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- GSAP for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
