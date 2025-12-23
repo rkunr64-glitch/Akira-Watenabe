@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: 1, 
             title: "VTuber Highlight", 
             category: "Video", 
-            price: "Rp 100.000 - Rp 250.000",
+            price: "Rp 100.000 - Rp 350.000",
             queueCurrent: "1",
             queueMax: "5",
             thumbnail: "https://files.catbox.moe/wlc1ga.png",
