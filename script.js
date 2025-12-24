@@ -353,6 +353,22 @@ document.addEventListener("DOMContentLoaded", () => {
             sourceFile: "WAV/MP3",
             includes: [ "Loopable track", "High Quality Mix"],
             previewLink: "https://files.catbox.moe/isgmgx.mp4"
+        },
+        {
+            id: 8, title: "ROYAL GOTHIC",
+            category: "Transition",
+            price: "Rp 370.000",
+            queueCurrent: "1",
+            queueMax: "5",
+            thumbnail: "https://files.catbox.moe/9qsnyg.png",
+            fullDescription: "Bawa kemegahan istana kuno ke dalam stream kamu dengan Royal Gothic Live Chat. Overlay premium dengan animasi partikel magis, efek fog dinamis, dan sistem identitas role yang mewah.",
+            deliveryTime: "3 - 5 Days",
+            revisions: "2x",
+            commercial: "Included",
+            sourceFile: "CSS Code",
+            includes: ["Custom CSS Code", "Installation Guide", "Font Styling"],
+            previewLink: "https://files.catbox.moe/vrmxmr.mp4"
+
         }
     ];
     
