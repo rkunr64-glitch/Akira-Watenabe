@@ -361,6 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
             queueCurrent: "1",
             queueMax: "5",
             thumbnail: "https://files.catbox.moe/9qsnyg.png",
+            description: "Chat box widget styling.",
             fullDescription: "Bawa kemegahan istana kuno ke dalam stream kamu dengan Royal Gothic Live Chat. Overlay premium dengan animasi partikel magis, efek fog dinamis, dan sistem identitas role yang mewah.",
             deliveryTime: "3 - 5 Days",
             revisions: "2x",
