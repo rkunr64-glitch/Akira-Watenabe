@@ -244,7 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
             id: 1, 
             title: "VTuber Highlight", 
             category: "Video", 
-            orientation: "landscape",
             price: "Rp 100.000 - Rp 350.000",
             queueCurrent: "1",
             queueMax: "5",
@@ -262,7 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
             id: 2, 
             title: "Stinger Transition", 
             category: "Transition", 
-            orientation: "landscape",
             price: "Rp 350.000",
             queueCurrent: "0",
             queueMax: "5",
@@ -279,7 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             id: 3, title: "CSS Overlay", 
             category: "Transition", 
-            orientation: "lancscape",
             price: "Rp 370.000",
             queueCurrent: "0",
             queueMax: "5",
@@ -296,7 +293,6 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             id: 4, title: "VTuber MV Production", 
             category: "MV", 
-            orientation: "landscape",
             price: "Rp 1.500.000+",
             queueCurrent: "1",
             queueMax: "5",
@@ -313,7 +309,6 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             id: 5, title: "Custom Stream BGM", 
             category: "Audio", 
-            orientation: "landscape",
             price: "Rp 250.000 - Rp 550.000",
             queueCurrent: "2",
             queueMax: "5",
@@ -330,7 +325,6 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             id: 6, title: "Vertical Shorts / TikTok", 
             category: "Shorts", 
-            orientation: "portrait",
             price: "Rp 20.000",
             queueCurrent: "3",
             queueMax: "7",
@@ -347,7 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             id: 7, title: "EDM POP",
             category: "Audio",
-            orientation: "landscape",
             price: "Rp 200.000 - Rp 300.000",
             queueCurrent: "1",
             queueMax: "5",
@@ -485,13 +478,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.openModal = (id) => {
         const item = commissionsData.find(i => i.id === id);
         if(!item) return;
-
-        //Fungsi utuk orientasi
-        const modalContent = modal.querySelector('.modal-content');
-        modalContent.classList.remove('layout-landscape');
-        if (item.orientation === 'landscape') {
-            modalContent.classList.add('layout-landscape');
-        }
 
         // Setup Link & Data Text
         const message = encodeURIComponent(`Hi Akira, I want to order: ${item.title}`);
@@ -646,6 +632,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lenis.stop();
         modal.classList.add('open');
 
+        const modalContent = modal.querySelector('.modal-content');
         const modalItems = modal.querySelectorAll('.info-section, .modal-header, .order-actions');
 
         gsap.fromTo(modalContent, 
