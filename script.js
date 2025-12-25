@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
             price: "Rp 350.000",
             queueCurrent: "0",
             queueMax: "5",
-            thumbnail: "https://files.catbox.moe/wlc1ga.png",
+            thumbnail: "assets/commissions/New_Project_25_86712D9.png",
             description: "Custom animated stinger.",
             fullDescription: "Transisi animasi mulus untuk pindah scene di OBS. Disesuaikan dengan warna dan tema model VTuber kamu. File transparan (.mov) siap pakai.",
             deliveryTime: "2 Days",
@@ -272,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
             commercial: "Included",
             sourceFile: "Yes (.mov)",
             includes: ["Transparent .MOV file", "Sound Effect (SFX)", "OBS Setup Guide"],
-            previewLink: "https://files.catbox.moe/wlc1ga.png"
+            previewLink: "assets/commissions/New_Project_25_86712D9.png"
         },
         {
             id: 3, title: "CSS Overlay", 
@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
             price: "Rp 370.000",
             queueCurrent: "0",
             queueMax: "5",
-            thumbnail: "https://files.catbox.moe/9qsnyg.png",
+            thumbnail: "assets/commissions/css/Screenshot_646.png",
             description: "Chat box widget styling.",
             fullDescription: "Koding CSS khusus untuk mempercantik chat box Streamlabs/Streamelements agar sesuai tema overlay kamu.",
             deliveryTime: "3 - 5 Day",
@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
             commercial: "Included",
             sourceFile: "CSS Code",
             includes: ["Custom CSS Code", "Installation Guide", "Font Styling"],
-            previewLink: "https://files.catbox.moe/vrmxmr.mp4"
+            previewLink: "assets/commissions/css/2025-12-24 13-12-02.mp4"
         },
         {
             id: 4, title: "VTuber MV Production", 
@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
             price: "Rp 1.500.000+",
             queueCurrent: "1",
             queueMax: "5",
-            thumbnail: "https://files.catbox.moe/wlc1ga.png",
+            thumbnail: "assets/commissions/New_Project_25_86712D9.png",
             description: "High quality Music Video.",
             fullDescription: "Video Musik (MV) full production untuk cover song atau lagu original. Menggunakan After Effects untuk tipografi kinetik dan efek visual tingkat lanjut.",
             deliveryTime: "7-14 Days",
@@ -304,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
             commercial: "Included",
             sourceFile: "No",
             includes: ["4K Render", "Kinetic Typography", "VFX & Particles", "Storyboard Review"],
-            previewLink: "https://files.catbox.moe/wlc1ga.png"
+            previewLink: "assets/commissions/New_Project_25_86712D9.png"
         },
         {
             id: 5, title: "Custom Stream BGM", 
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
             price: "Rp 250.000 - Rp 550.000",
             queueCurrent: "2",
             queueMax: "5",
-            thumbnail: "https://files.catbox.moe/wlc1ga.png",
+            thumbnail: "assets/commissions/New_Project_25_86712D9.png",
             description: "Custom composed BGM.",
             fullDescription: "Musik latar original yang dibuat khusus untuk stream kamu (Starting, Talking, Ending). Bebas copyright strike.",
             deliveryTime: "5-7 Days",
@@ -320,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
             commercial: "Included",
             sourceFile: "WAV/MP3",
             includes: ["Loopable Track", "High Quality Mix", "Stems (Optional)"],
-            previewLink: "https://files.catbox.moe/wlc1ga.png"
+            previewLink: "assets/commissions/New_Project_25_86712D9.png"
         },
         {
             id: 6, title: "Vertical Shorts / TikTok", 
@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
             price: "Rp 20.000",
             queueCurrent: "3",
             queueMax: "7",
-            thumbnail: "https://files.catbox.moe/wlc1ga.png",
+            thumbnail: "assets/commissions/New_Project_25_86712D9.png",
             description: "Engaging portrait videos.",
             fullDescription: "Video vertikal yang dioptimalkan untuk algoritma TikTok/Reels. Hook di awal, potongan cepat, dan subtitle besar yang menarik perhatian.",
             deliveryTime: "1-2 Days",
@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
             commercial: "Included",
             sourceFile: "No",
             includes: ["9:16 Vertical Format", "Hardcoded Subs", "Copyright Free Music"],
-            previewLink: "https://files.catbox.moe/wlc1ga.png" 
+            previewLink: "assets/commissions/New_Project_25_86712D9.png" 
         },
         {
             id: 7, title: "EDM POP",
@@ -344,7 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
             price: "Rp 200.000 - Rp 300.000",
             queueCurrent: "1",
             queueMax: "5",
-            thumbnail: "https://files.catbox.moe/45xnxh.png",
+            thumbnail: "assets/commissions/bgm/Movies & TV 12_25_2025 9_41_51 PM.png",
             description: "Music For BGM",
             fullDescription: "Musik dengan genre EDM yang mungkin cocok dengan karakter atau lore kamu",
             deliveryTime: "3 - 4 Days",
@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
             commercial: "Included (jika ingin file .flp nya maka akan ada biaya tambahan)",
             sourceFile: "WAV/MP3",
             includes: [ "Loopable track", "High Quality Mix"],
-            previewLink: "https://files.catbox.moe/isgmgx.mp4"
+            previewLink: "assets/commissions/bgm/2025-11-15 10-53-53.mp4"
         },
     ];
     
