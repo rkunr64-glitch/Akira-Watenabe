@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
             price: "Rp 100.000 - Rp 350.000",
             queueCurrent: "1",
             queueMax: "5",
-            thumbnail: "https://files.catbox.moe/wlc1ga.png",
+            thumbnail: "assets/commissions/New_Project_25_86712D9.png",
             description: "Funny compilations with memes.",
             fullDescription: "Editing stream VODs menjadi video highlight yang lucu dan cepat. Paket ini fokus pada retensi penonton YouTube dengan penambahan meme, SFX, dan zoom in/out yang dinamis.",
             deliveryTime: "3-5 Days",
@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
             commercial: "Included",
             sourceFile: "No",
             includes: ["1080p 60fps Render", "Dynamic Subtitles", "Meme & SFX", "Thumbnail (Simple)"],
-            previewLink: "https://files.catbox.moe/wlc1ga.png" 
+            previewLink: "assets/commissions/New_Project_25_86712D9.png" 
         },
         {
             id: 2, 
