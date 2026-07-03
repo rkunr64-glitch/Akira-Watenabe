@@ -60,43 +60,6 @@ body {
     box-shadow: 0 0 15px var(--secondary);
 }
 
-/* --- LOADER --- */
-#loader {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--bg-dark);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.5s ease;
-}
-
-.glitch-text {
-    font-family: var(--font-head);
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary);
-    position: relative;
-    animation: glitch 1s infinite;
-}
-
-.loading-bar {
-    width: 200px;
-    height: 4px;
-    background: #333;
-    margin-top: 20px;
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.bar-fill {
-    height: 100%;
-    background: var(--secondary);
-    width: 0%;
-    animation: load 1.5s ease-in-out forwards;
-}
-
 /* --- NAVBAR --- */
 .navbar {
     position: fixed;
@@ -1958,35 +1921,6 @@ button[disabled] {
     }
 }
 
-.boot-log {
-    margin-top: 20px;
-    font-family: var(--font-tech);
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-.boot-line {
-    opacity: 0;
-    transform: translateX(-10px);
-    animation: bootLine 0.6s ease forwards;
-}
-
-.boot-line:nth-child(1) { animation-delay: 0.2s; }
-.boot-line:nth-child(2) { animation-delay: 0.5s; }
-.boot-line:nth-child(3) { animation-delay: 0.8s; }
-.boot-line:nth-child(4) { animation-delay: 1.1s; }
-
-.boot-line.success {
-    color: var(--primary);
-}
-
-@keyframes bootLine {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
 .neon-text {
     animation: neonPulse 2.5s ease-in-out infinite;
 }
@@ -2009,137 +1943,6 @@ button[disabled] {
 @keyframes floatSlow {
     0%,100% { transform: translateY(0); }
     50% { transform: translateY(-12px); }
-}
-
-.loader-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.system-scan {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(0,243,255,0.15) 50%,
-        transparent 100%
-    );
-    animation: scanMove 2.5s linear infinite;
-    pointer-events: none;
-}
-
-@keyframes scanMove {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
-}
-
-.boot-log {
-    font-family: var(--font-tech);
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-top: 20px;
-    line-height: 1.6;
-    max-height: 120px;
-    overflow: hidden;
-}
-
-.boot-line {
-    opacity: 0;
-    animation: fadeInLine 0.3s forwards;
-}
-
-@keyframes fadeInLine {
-    to { opacity: 1; }
-}
-
-.loading-bar.segmented {
-    display: flex;
-    gap: 6px;
-    margin-top: 20px;
-}
-
-.bar-segment {
-    flex: 1;
-    height: 6px;
-    background: rgba(255,255,255,0.1);
-    opacity: 0.2;
-}
-
-.bar-segment.active {
-    background: var(--primary);
-    opacity: 1;
-    box-shadow: 0 0 10px var(--primary);
-}
-
-.boot-status {
-    margin-top: 15px;
-    font-family: var(--font-tech);
-    font-size: 0.8rem;
-    color: var(--primary);
-    letter-spacing: 1px;
-}
-
- /* BOOT INTERACTION */
-
- .boot-interaction {
-    margin-top: 30px;
-    cursor: pointer;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    transition: 0.4s ease;
-}
-
-.boot-interaction::before {
-    content: "";
-    width: 180px;
-    height: 48px;
-    border: 1px solid var(--primary);
-    background: linear-gradient(
-        120deg,
-        rgba(0,243,255,0.15),
-        rgba(189,0,255,0.1)
-    );
-    box-shadow:
-        inset 0 0 15px rgba(0,243,255,0.2),
-        0 0 20px rgba(0,243,255,0.25);
-    clip-path: polygon(
-        0 0,
-        95% 0,
-        100% 50%,
-        95% 100%,
-        0 100%,
-        5% 50%
-    );
-    animation: pulseBoot 2s infinite;
-}
-
-.boot-clik-text {
-    font-family: var(--font-tech);
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    color: var(--primary);
-    text-shadow: 0 0 8px rgba(0,243,255,0.6);
-}
-
-.boot-interaction:hover {
-    transform: scale(1.05);
-}
-
-@keyframes pulseBoot {
-    0%,100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-/* Hide animation */
-.boot-hide {
-    opacity: 0;
-    transform: scale(0.9);
-    pointer-events: none;
 }
 
 .hero-container {
@@ -4687,12 +4490,10 @@ video {
     }
 
     .audio-viz span,
-    .glitch-text,
     .glitch-layer,
     .big-circle,
     .scan-bar,
-    .scroll-trigger,
-    .boot-ring {
+    .scroll-trigger {
         animation: none !important;
     }
 
