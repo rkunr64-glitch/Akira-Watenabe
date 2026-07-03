@@ -1,21 +1,37 @@
-// Inisialisasi Smooth Scroll (Lenis)
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: false,
-    touchMultiplier: 2,
-});
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+const isMobileViewport = window.matchMedia('(max-width: 899px)').matches;
+const enableHeavyMotion = !prefersReducedMotion && !isTouchDevice && !isMobileViewport;
 
-function raf(time) {
-    lenis.raf(time);
+// Inisialisasi Smooth Scroll (Lenis) hanya di device yang cukup kuat.
+const lenis = (enableHeavyMotion && typeof Lenis !== 'undefined')
+    ? new Lenis({
+        duration: 1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+    })
+    : {
+        scrollTo(target, options = {}) {
+            const el = typeof target === 'string' ? document.querySelector(target) : null;
+            const top = target === 0 ? 0 : el ? el.offsetTop : 0;
+            window.scrollTo({ top, behavior: options.immediate || prefersReducedMotion ? 'auto' : 'smooth' });
+        },
+        stop() {},
+        start() {}
+    };
+
+if (enableHeavyMotion && typeof lenis.raf === 'function') {
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
     requestAnimationFrame(raf);
 }
-
-requestAnimationFrame(raf);
 
 // Integrasi Lenis dengan navigasi
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -28,12 +44,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 document.addEventListener("DOMContentLoaded", () => {
 
     // Inisialisasi AOS //
-    AOS.init({
-        duration: 1000,
-        once: false, // Animasi ulang setiap scroll ke atas/bawah
-        mirror: true,
-        easing: 'ease-out-back'
-    });
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: enableHeavyMotion ? 800 : 0,
+            once: true,
+            mirror: false,
+            disable: () => !enableHeavyMotion,
+            easing: 'ease-out-back'
+        });
+    }
     
     // 1. ADVANCED BOOT SEQUENCE
     const loader = document.getElementById("loader");
@@ -68,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bootLog.appendChild(line);
         bootLog.scrollTop = bootLog.scrollHeight;
 
-        if (bootBeep) {
+        if (bootBeep && audioUnlocked) {
             bootBeep.playbackRate = 0.9 + Math.random() * 0.3;
             bootBeep.currentTime = 0;
             bootBeep.play().catch(() => {});
@@ -93,21 +112,24 @@ document.addEventListener("DOMContentLoaded", () => {
         audioUnlocked = true;
     }
 
-    // Handle Boot Click
-    if (bootInteraction) {
-        bootInteraction.addEventListener("click", () => {
-            if (bootStarted) return;
-            bootStarted = true;
+    function startBoot(withAudio = false) {
+        if (bootStarted) return;
+        bootStarted = true;
 
-            unlockAudio();
-            bootInteraction.classList.add("boot-hide"); // Efek menghilang
+        if (withAudio) unlockAudio();
+        if (bootInteraction) bootInteraction.classList.add("boot-hide"); // Efek menghilang
 
-            // Delay sedikit biar cinematic
-            setTimeout(() => {
-                runBoot();
-            }, 500);
-        });
+        // Delay sedikit biar cinematic
+        setTimeout(() => {
+            runBoot();
+        }, withAudio ? 500 : 150);
     }
+
+    // Handle Boot Click + fallback otomatis untuk PageSpeed/Lighthouse yang tidak mengklik.
+    if (bootInteraction) {
+        bootInteraction.addEventListener("click", () => startBoot(true));
+    }
+    setTimeout(() => startBoot(false), 1200);
 
     function runBoot() {
         if (currentLine < bootLines.length) {
@@ -122,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(runBoot, 300 + Math.random() * 300);
         } else {
             statusText.textContent = "SYSTEM ONLINE";
-            if (bootConfirm) {
+            if (bootConfirm && audioUnlocked) {
                 bootConfirm.currentTime = 0;
                 bootConfirm.play().catch(() => {});
             }
@@ -172,8 +194,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         duration: 0.5, 
                         onComplete: () => {
                             // REFRESH SEMUA PLUGIN SETELAH PAGE MUNCUL
-                            AOS.refresh();
-                            ScrollTrigger.refresh();
+                            if (typeof AOS !== 'undefined') AOS.refresh();
+                            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
                             lenis.scrollTo(0, { immediate: true });
 
                             if (pageId === 'about') {
@@ -197,8 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             if(pageId === 'protocol') {
                                 initProtocolAnimation();
                             }
-                            AOS.refresh(); 
-                            ScrollTrigger.refresh();
+                            if (typeof AOS !== 'undefined') AOS.refresh(); 
+                            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
                             
                             // Cek jika masuk ke protocol, paksa jalankan observer jika sudah di view
                             if(pageId === 'protocol') {
@@ -380,7 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="card-visual">
                     <div class="img-wrapper">
-                        <img src="${item.thumbnail}" alt="${item.title}">
+                        <img src="${item.thumbnail}" alt="${item.title}" loading="lazy" decoding="async">
                         <div class="scan-overlay"></div>
                     </div>
                     
@@ -601,7 +623,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mediaContainer.innerHTML = `<iframe src="${getSmartEmbedUrl(link)}?rel=0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%; height:100%; border:none;"></iframe>`;
         } else {
             // Image Fallback
-            mediaContainer.innerHTML = `<img src="${item.thumbnail}" alt="Preview" style="width:100%; height:100%; object-fit:contain;">`;
+            mediaContainer.innerHTML = `<img src="${item.thumbnail}" alt="Preview" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:contain;">`;
         }
 
         // Recommendations Logic
@@ -614,7 +636,7 @@ document.addEventListener("DOMContentLoaded", () => {
         recommendations.forEach(rec => {
             const card = document.createElement("div");
             card.className = "recommend-card";
-            card.innerHTML = `<img src="${rec.thumbnail}"><h5>${rec.title}</h5><span>${rec.price}</span>`;
+            card.innerHTML = `<img src="${rec.thumbnail}" alt="${rec.title}" loading="lazy" decoding="async"><h5>${rec.title}</h5><span>${rec.price}</span>`;
             card.onclick = () => openModal(rec.id);
             recommendList.appendChild(card);
         });
@@ -890,12 +912,30 @@ document.addEventListener("DOMContentLoaded", () => {
             }, "-=1");
 
             // Refresh AOS agar mendeteksi posisi scroll setelah animasi masuk
-            AOS.refresh();
+            if (typeof AOS !== 'undefined') AOS.refresh();
         }
     }
 
+    function loadHeroVideos() {
+        if (!enableHeavyMotion) return;
+
+        document.querySelectorAll('.slide-video[data-src]').forEach((video) => {
+            if (video.src) return;
+            video.src = video.dataset.src;
+            video.preload = 'metadata';
+            video.load();
+        });
+
+        const activeVideo = document.querySelector('.slide-video.active');
+        if (activeVideo) activeVideo.play().catch(() => {});
+    }
+
+    const scheduleIdle = window.requestIdleCallback || ((callback) => setTimeout(callback, 1200));
+    window.addEventListener('load', () => scheduleIdle(loadHeroVideos), { once: true });
+
     // TAMBAHAN: LOGIKA SLIDESHOW VIDEO
     function initSlideshow() {
+        if (!enableHeavyMotion) return;
         const videos = document.querySelectorAll('.slide-video');
         if(videos.length < 2) return;
         
@@ -912,7 +952,7 @@ document.addEventListener("DOMContentLoaded", () => {
             videos[currentIndex].classList.add('active');
             
             // Pastikan video diputar
-            videos[currentIndex].play();
+            if (videos[currentIndex].src) videos[currentIndex].play().catch(() => {});
         }, 5000); // Ganti setiap 5 detik
     }
 
@@ -1211,16 +1251,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* --- PARTICLE SYSTEM & VISUAL EFFECTS (Luar DOMLoaded) --- */
 const canvas = document.getElementById("particle-bg");
-const ctx = canvas.getContext("2d");
+const ctx = canvas ? canvas.getContext("2d") : null;
 let particles = [];
-const PARTICLE_COUNT = 80;
+const PARTICLE_COUNT = enableHeavyMotion ? 42 : 0;
+let particleFrameId = null;
 
 function resizeCanvas() {
+    if (!canvas) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
+if (canvas && enableHeavyMotion) {
+    window.addEventListener("resize", resizeCanvas, { passive: true });
+    resizeCanvas();
+} else if (canvas) {
+    canvas.hidden = true;
+}
 
 class Particle {
     constructor() {
@@ -1236,6 +1282,7 @@ class Particle {
         if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
     }
     draw() {
+        if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(0, 243, 255, 0.7)";
@@ -1249,6 +1296,7 @@ function initParticles() {
 }
 
 function connectParticles() {
+    if (!ctx) return;
     for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
             const dx = particles[i].x - particles[j].x;
@@ -1267,42 +1315,59 @@ function connectParticles() {
 }
 
 function animateParticles() {
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     particles.forEach(p => { p.move(); p.draw(); });
     connectParticles();
-    requestAnimationFrame(animateParticles);
+    particleFrameId = requestAnimationFrame(animateParticles);
 }
 
-initParticles();
-animateParticles();
+if (canvas && enableHeavyMotion) {
+    initParticles();
+    animateParticles();
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden && particleFrameId) {
+            cancelAnimationFrame(particleFrameId);
+            particleFrameId = null;
+        } else if (!document.hidden && !particleFrameId) {
+            animateParticles();
+        }
+    });
+}
 
 // 3D Tilt Effect
-document.querySelectorAll(".card").forEach(card => {
-    const inner = card.querySelector(".card-inner");
-    card.addEventListener("mousemove", e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const rotateY = ((x / rect.width) - 0.5) * 15;
-        const rotateX = ((y / rect.height) - 0.5) * -15;
-        inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+if (enableHeavyMotion) {
+    document.querySelectorAll(".card").forEach(card => {
+        const inner = card.querySelector(".card-inner");
+        if (!inner) return;
+        card.addEventListener("mousemove", e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const rotateY = ((x / rect.width) - 0.5) * 15;
+            const rotateX = ((y / rect.height) - 0.5) * -15;
+            inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener("mouseleave", () => {
+            inner.style.transform = "rotateX(0) rotateY(0)";
+        });
     });
-    card.addEventListener("mouseleave", () => {
-        inner.style.transform = "rotateX(0) rotateY(0)";
-    });
-});
+}
 
 // Cursor
 const cursorDot = document.querySelector('[data-cursor-dot]');
 const cursorOutline = document.querySelector('[data-cursor-outline]');
-if(cursorDot && cursorOutline) {
+if(cursorDot && cursorOutline && enableHeavyMotion) {
     window.addEventListener("mousemove", function(e) {
         const posX = e.clientX;
         const posY = e.clientY;
         cursorDot.style.left = `${posX}px`;
         cursorDot.style.top = `${posY}px`;
         cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
-    });
+    }, { passive: true });
+} else {
+    if (cursorDot) cursorDot.style.display = "none";
+    if (cursorOutline) cursorOutline.style.display = "none";
 }
 
 // Hacker Text
@@ -1335,58 +1400,68 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
 
-const magneticButtons = document.querySelectorAll('.btn, .nav-link, .filter-btn');
+if (enableHeavyMotion && typeof gsap !== 'undefined') {
+    const magneticButtons = document.querySelectorAll('.btn, .nav-link, .filter-btn');
 
-magneticButtons.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
 
-        gsap.to(btn, {
-            x: x * 0.3, // Tombol mengikuti kursor 30%
-            y: y * 0.3,
-            duration: 0.3,
-            ease: "power2.out"
+            gsap.to(btn, {
+                x: x * 0.3, // Tombol mengikuti kursor 30%
+                y: y * 0.3,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: "elastic.out(1, 0.3)" // Efek membal saat kursor pergi
+            });
         });
     });
+}
 
-    btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, {
-            x: 0,
-            y: 0,
-            duration: 0.5,
-            ease: "elastic.out(1, 0.3)" // Efek membal saat kursor pergi
-        });
-    });
-});
+if (enableHeavyMotion && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Membuat garis sirkuit menyala saat scroll
-gsap.to(".circuit-fill", {
-    height: "100%", // Mengisi tinggi garis dari 0 ke 100%
-    ease: "none",
-    scrollTrigger: {
-        trigger: ".protocol-container", // Animasi dimulai saat container ini terlihat
-        start: "top 60%", // Mulai saat bagian atas container mencapai 60% layar
-        end: "bottom 80%", // Berakhir saat bagian bawah container mencapai 80% layar
-        scrub: 1, // Garis mengikuti gerakan scroll (halus)
-    }
-});
-// Membuat setiap step protocol muncul secara dramatis saat dilewati scroll
-document.querySelectorAll('.protocol-step').forEach((step, i) => {
-    gsap.from(step, {
+    // Membuat garis sirkuit menyala saat scroll
+    gsap.to(".circuit-fill", {
+        height: "100%", // Mengisi tinggi garis dari 0 ke 100%
+        ease: "none",
         scrollTrigger: {
-            trigger: step,
-            start: "top 80%",
-        },
-        x: i % 2 === 0 ? -100 : 100, // Dari kiri jika genap, kanan jika ganjil
-        opacity: 0,
-        duration: 1,
-        ease: "expo.out"
+            trigger: ".protocol-container", // Animasi dimulai saat container ini terlihat
+            start: "top 60%", // Mulai saat bagian atas container mencapai 60% layar
+            end: "bottom 80%", // Berakhir saat bagian bawah container mencapai 80% layar
+            scrub: 1, // Garis mengikuti gerakan scroll (halus)
+        }
     });
-});
+    // Membuat setiap step protocol muncul secara dramatis saat dilewati scroll
+    document.querySelectorAll('.protocol-step').forEach((step, i) => {
+        gsap.from(step, {
+            scrollTrigger: {
+                trigger: step,
+                start: "top 80%",
+            },
+            x: i % 2 === 0 ? -100 : 100, // Dari kiri jika genap, kanan jika ganjil
+            opacity: 0,
+            duration: 1,
+            ease: "expo.out"
+        });
+    });
+} else {
+    document.querySelectorAll('.protocol-step').forEach(step => {
+        step.classList.add('visible');
+    });
+    const circuitFill = document.querySelector('.circuit-fill');
+    if (circuitFill) circuitFill.style.height = '100%';
+}
 
 // --- PERBAIKAN PROTOCOL OBSERVER ---
 

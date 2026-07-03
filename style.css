@@ -4655,3 +4655,51 @@ button[disabled] {
     box-shadow: 0 0 5px var(--secondary);
 }
 
+/* --- PERFORMANCE SAFETY NET --- */
+img,
+video {
+    max-width: 100%;
+}
+
+.slide-video {
+    background-color: #05070c;
+}
+
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    #particle-bg,
+    .cursor-dot,
+    .cursor-outline,
+    .crt-overlay,
+    .noise-overlay,
+    .screen-overlay,
+    .floating-code,
+    .deco-ring,
+    .tech-connector {
+        display: none !important;
+    }
+
+    .slide-video:not(.active) {
+        display: none;
+    }
+
+    .audio-viz span,
+    .glitch-text,
+    .glitch-layer,
+    .big-circle,
+    .scan-bar,
+    .scroll-trigger,
+    .boot-ring {
+        animation: none !important;
+    }
+
+    .navbar,
+    .tech-card,
+    .modal-content,
+    .holo-deck {
+        backdrop-filter: none !important;
+    }
+}
